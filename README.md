@@ -9,6 +9,7 @@
 - 友情链接
 - 开源项目
 - 最热文章
+- RSS输出
 - 文章定时同步到百度云存储
 
 更多信息请见：[http://www.pyiner.com/category/Django/](http://www.pyiner.com/category/Django/) 

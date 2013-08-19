@@ -1,0 +1,119 @@
+{% load markup %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block title %}<title>Yiner in Python</title>{% endblock %}
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.jpeg" />
+	<meta name="baidu-tc-verification" content="d48855264c634108ade28f9bffc4079d" />
+    <link rel=" stylesheet" title="Tomorrow Night" href="/static/css/tomorrow-night.css" media="screen">
+    <script src="/static/js/highlight.pack.js"></script>
+    <script>
+    hljs.tabReplace = '';
+    hljs.initHighlightingOnLoad();
+    </script>
+</head>
+<body>
+<div id="wrapper">
+<div id="header-wrapper">
+<header id="header">
+	<h1 id="logo"><a href="/">Yiner in Python</a></h1>
+	<p class="description">Python Linux web安全</p>
+	<p class="socialmedia">
+		<a href="https://github.com/Yiner/aboutme" title="关于我" rel="me"><img src="/static/img/yiner.png" alt="关于我" height="24" width="24">About Yiner</a>
+	    <a href="mailto:lijiuyang1992@gmail.com" title="Mail to me" rel="me"><img src="/static/img/email.png" alt="Mail to me" height="24" width="24">Mail to me</a>
+        <a href="https://github.com/Yiner" title="My Github" rel="me"><img src="/static/img/github.png" alt="My Github" height="24" width="24">My Github</a>
+        <a href="/feed" title="订阅" rel="me"><img src="/static/img/atom.png" alt="订阅" height="24" width="24">订阅</a>
+
+    </p>
+	<form method="get" id="searchform" action="/search">
+		<input type="text" placeholder="找找有啥好东东…" value="" name="keywords" id="keywords" x-webkit-speech="" x-webkit-grammar="builtin:search" onwebkitspeechchange="this.parentNode.submit()">
+		<input type="submit" value="搜索" id="searchsubmit">
+	</form>
+</header>
+</div>
+<div id="body">
+{% block content %}
+{% endblock %}
+<section id="sidebar">
+	<section id="online_visitors" class="widget">
+		<h4>开源项目</h4>
+        <ul>
+            {% for openproject in Sider.OpenProject %}
+                <li>
+                    <a href="{{ openproject.url }}" target="_blank">{{ openproject.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+	</section>
+    <section id="" class="widget">
+		<h4>最热文章</h4>
+        <ul>
+            {% for hotarticle in Sider.Hotarticle %}
+                <li>
+                    <a href="/{{hotarticle.url}}/" >{{ hotarticle.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+	</section>
+    <section id="online_visitors" class="widget">
+        <h4>最新评论</h4>
+        <ul class="ds-recent-comments" data-num-items="5" data-show-title="1" ></ul>
+        <!--多说js加载开始，一个页面只需要加载一次 -->
+        <script type="text/javascript">
+        var duoshuoQuery = {short_name:"pyiner"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+    <!--多说js加载结束，一个页面只需要加载一次 -->
+	</section>
+	<section id="categories" class="widget">
+		<h4>分类</h4>
+		<ul>
+        <li>
+            <ul>
+                {% for category in Sider.Category %}
+			    <li>
+                    <a href="/category/{{ category.name }}">{{ category.name }}</a>
+                </li>
+                {% endfor %}
+                </ul>
+            </li>
+
+		</ul>
+	</section>
+	<section id="online_visitors" class="widget">
+		<h4>友情链接</h4>
+        <ul>
+            {% for friendurl in Sider.FriendUrl %}
+                <li>
+                    <a href="{{ friendurl.url }}" target="_blank">{{ friendurl.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+	</section>
+</section>
+<footer id="footer">
+	<p class="backtotop"><a href="#">▲Top</a></p>
+	<p class="credits">©<a href="/">Yiner in Python</a><span>
+        •
+    </span>运行于 <a href="http://developer.baidu.com/" rel="nofollow">BAE</a><span>
+        •
+    </span>Designed by <a href="http://www.keakon.net/" rel="nofollow">keakon</a>
+    </p>
+</footer>
+</div>
+</div>
+<section style="display: none"><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F381585bf96b22f0e0011c04516926339' type='text/javascript'%3E%3C/script%3E"));
+</script></section>
+
+</body>
+</html>

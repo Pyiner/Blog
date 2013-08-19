@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load markup %}
+    {% block title %}
+    <title>{{ page.title }}|Yiner in Python</title>
+    {% endblock %}
+{% block content %}
+<section id="content">
+	<article class="post">
+		<h2 class="post-title"><a href="/{{ page.url }}/">{{ page.title }}</a></h2>
+		<p class="post-date"><span class="year">{{ page.date.year}}</span>
+            <span class="month">{{ page.date|date:"M"}}</span>
+            <span class="day">{{ page.date.day}}</span>
+            <span class="time">{{ page.date|date:"H"}}:{{ page.date|date:"H"}}</span>
+            <span class="postcomment">{{ page.num }}次查看</span>
+        </p>
+		<p class="post-data">
+            <span class="posttag">标签：
+                {% for l in page.label.all %}
+                <a href="#">{{ l }}</a>,
+                {% endfor %}
+            </span>
+        </p>
+		<section class="article-content">{{ page.content|markdown}}</section>
+	</article>
+    <!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread" data-title="{{ page.title }}"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"pyiner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block content %}
+<section id="content">
+    {% for page in Page %}
+    <article class="post">
+		<h2 class="post-title"><a href="/{{ page.url }}/">{{ page.title }}</a></h2>
+		<p class="post-date"><span class="year">{{ page.date.year}}</span>
+            <span class="month">{{ page.date|date:"M"}}</span>
+            <span class="day">{{ page.date.day}}</span>
+            <span class="time">{{ page.date|date:"H"}}:{{ page.date|date:"H"}}</span>
+            <span class="postcomment">{{page.num }}次查看</span>
+        </p>
+		<p class="post-data">
+            <span class="posttag">标签：
+                {% for label in page.label.all %}
+                <a href="#">{{ label}}</a>,
+                {% endfor %}
+            </span>
+        </p>
+        <section class="article-content">{{ page.summary|markdown }}</section>
+	</article>
+
+    {% endfor %}
+    {% if Pnum %}
+    <p class="post-nav" style="">
+        <span class="previous">
+            <a href="/?page={{ Pnum }}">« 下一页</a>
+        </span>
+    </p>
+    {% endif %}
+</section>
+{% endblock %}

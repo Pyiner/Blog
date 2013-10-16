@@ -110,8 +110,8 @@ def Search(request):#文章搜索
 
 def article_out(request):#定时将文章保存到百度云存储中
     from bae.api import bcs
-    AK = 'ayEMEGaUU4R8KgSGQYFHhGoX' #AK
-    SK = 'la47G8zTiY9STSYpk2Dn2GY0gU7WGfaR'     #SK
+    AK = '' #AK
+    SK = ''     #SK
     bname = 'blog-article'
     bcs2 = bcs.BaeBCS('http://bcs.duapp.com/', AK, SK)
     a = Article.objects.all()

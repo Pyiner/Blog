@@ -40,9 +40,9 @@
 	<section id="online_visitors" class="widget">
 		<h4>开源项目</h4>
         <ul>
-            {% for openproject in Sider.OpenProject %}
+            {% for i in Open %}
                 <li>
-                    <a href="{{ openproject.url }}" target="_blank">{{ openproject.name }}</a>
+                    <a href="{{ i.url }}" target="_blank">{{ i.name }}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -50,16 +50,16 @@
     <section id="" class="widget">
 		<h4>最热文章</h4>
         <ul>
-            {% for hotarticle in Sider.HotAtrile %}
+            {% for i in Hotarticle %}
                 <li>
-                    <a href="/{{hotarticle.url}}/" >{{ hotarticle.title }}</a>
+                    <a href="/{{i.url}}/" >{{ i.title }}</a>
                 </li>
             {% endfor %}
         </ul>
 	</section>
-    <section id="online_visitors" class="widget">
-        <h4>最新评论</h4>
-        <ul class="ds-recent-comments" data-num-items="5" data-show-title="1" ></ul>
+    	<section id="online_visitors" class="widget">
+		<h4>最新评论</h4>
+		<ul class="ds-recent-comments" data-num-items="5" data-show-title="1" ></ul>
         <!--多说js加载开始，一个页面只需要加载一次 -->
         <script type="text/javascript">
         var duoshuoQuery = {short_name:"pyiner"};
@@ -71,16 +71,16 @@
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
         })();
         </script>
-    <!--多说js加载结束，一个页面只需要加载一次 -->
+        <!--多说js加载结束，一个页面只需要加载一次 -->
 	</section>
 	<section id="categories" class="widget">
 		<h4>分类</h4>
 		<ul>
         <li>
             <ul>
-                {% for category in Sider.Category %}
+                {% for c in C %}
 			    <li>
-                    <a href="/category/{{ category.name }}">{{ category.name }}</a>
+                    <a href="/category/{{ c.name }}">{{ c.name }}</a>
                 </li>
                 {% endfor %}
                 </ul>
@@ -91,9 +91,9 @@
 	<section id="online_visitors" class="widget">
 		<h4>友情链接</h4>
         <ul>
-            {% for friendurl in Sider.FriendUrl %}
+            {% for i in Friend %}
                 <li>
-                    <a href="{{ friendurl.url }}" target="_blank">{{ friendurl.name }}</a>
+                    <a href="{{ i.url }}" target="_blank">{{ i.name }}</a>
                 </li>
             {% endfor %}
         </ul>

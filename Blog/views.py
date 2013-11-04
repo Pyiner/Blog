@@ -3,27 +3,18 @@ from django.shortcuts import render_to_response
 from Blog.models import Article,Category,OpenProject,FriendUrl
 from django.template import RequestContext
 from django.http import HttpResponse,HttpResponseRedirect
-from django.core.paginator import Paginator
 import urllib
+from django.core.paginator import Paginator
 
-
-class Sider():#侧栏
-    def __init__(self):
-        Category = None
-        OpenProject = None
-        HotArticle = None
-        FriendUrl = None
-
-
-def GetCategory():#分类
+def GetCategory():
     category = Category.objects.all()
     return category
 
-def GetOpenProject():#开源项目
+def GetOpenProject():
     openproject = OpenProject.objects.all()
     return openproject
 
-def GetHotArticle():#热门文章
+def HotArticle():
     hotarticle = Article.objects.all().order_by('-num')
     num = 0
     h = hotarticle[:]
@@ -35,20 +26,13 @@ def GetHotArticle():#热门文章
             break
     return hotarticle
 
-def GetFriendUrl():#友情链接
+def GetFriendUrl():
     friendurl = FriendUrl.objects.all()
     return friendurl
 
-def GetSider():#获取侧栏
-    sider = Sider()
-    sider.Category = GetCategory()
-    sider.OpenProject = GetOpenProject()
-    sider.HotAtrile = GetHotArticle()
-    sider.FriendUrl = GetFriendUrl()
-    return sider
 
-
-def Categorylist(request,category):#分类文章列表
+def Categorylist(request,category):
+    category = urllib.unquote(str(category))
     category = urllib.unquote(str(category))
     num = request.GET.get('page')
     if num:
@@ -62,56 +46,68 @@ def Categorylist(request,category):#分类文章列表
         pnum = None
     else:
         pnum = num+1
-    sider = GetSider()
-    return render_to_response('index.html',{'Page':page,'Pnum':pnum,'Sider':sider})
+    c = GetCategory()
+    o = GetOpenProject()
+    f = GetFriendUrl()
+    h = HotArticle()
+    return render_to_response('index.html',{'P':page,'Pnum':pnum,'C':c,'Open':o,'Friend':f,'Hotarticle':h})
 
 
 
-def Index(request):#主页
+def Index(request):
     num = request.GET.get('page')
     if num:
         num = int(num)
     else:
         num=1
-    article=Article.objects.all().order_by("-id")#安时间从近到远输出
+    article=Article.objects.all().order_by("-id")
     p = Paginator(article, 5)
     page = p.page(num)
     if num == p.num_pages:
         pnum = None
     else:
         pnum = num+1
-    sider = GetSider()
-    return render_to_response('index.html',{'Page':page,'Pnum':pnum,'Sider':sider})
+    c = GetCategory()
+    o = GetOpenProject()
+    f = GetFriendUrl()
+    h = HotArticle()
+    return render_to_response('index.html',{'P':page,'Pnum':pnum,'C':c,'Open':o,'Friend':f,'Hotarticle':h})
 
 
-def Page(request,url):#文章页面
-    url = urllib.unquote(str(url))#url中
+def Page(request,url):
+    url = urllib.unquote(str(url))
     if url:
         try:
             article = Article.objects.get(url = url)
             Article.objects.filter(url=url).update(num=article.num+1)
-            sider = GetSider()
-            return render_to_response('article.html',{'page':article,'Sider':sider})
+            c = GetCategory()
+            o = GetOpenProject()
+            f = GetFriendUrl()
+            h = HotArticle()
+            return render_to_response('article.html',{'p':article,'C':c,'Open':o,'Friend':f,'Hotarticle':h})
         except:
             return HttpResponseRedirect('/')
     else:
        return HttpResponseRedirect('/')
 
 
-def Search(request):#文章搜索
+def Search(request):
     key = request.GET.get('keywords')
     a = Article.objects.all().order_by('-id')
     page = []
     for p in a:
         if key in p.content:
             page.append(p)
-    sider = GetSider()
-    return render_to_response('index.html',{'Page':page,'Sider':sider})
+    c = GetCategory()
+    o = GetOpenProject()
+    f = GetFriendUrl()
+    h = HotArticle()
+    return render_to_response('index.html',{'P':page,'C':c,'Open':o,'Friend':f,'Hotarticle':h})
 
-def article_out(request):#定时将文章保存到百度云存储中
+def article_out(request):
     from bae.api import bcs
-    AK = '' #AK
-    SK = ''     #SK
+    AK = 'ayEMEGaUU4R8KgSGQYFHhGoX'           #请改为你的AK
+    SK = 'la47G8zTiY9STSYpk2Dn2GY0gU7WGfaR'       #请改为你的SK
     bname = 'blog-article'
     bcs2 = bcs.BaeBCS('http://bcs.duapp.com/', AK, SK)
     a = Article.objects.all()

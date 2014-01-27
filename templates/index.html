@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load markup %}
 {% block content %}
 <section id="content">
     {% for p in P %}
@@ -18,7 +17,7 @@
                 {% endfor %}
             </span>
         </p>
-        <section class="article-content">{{ p.summary|markdown }}</section>
+        <section class="article-content">{{ p.summary|safe }}</section>
 	</article>
 
     {% endfor %}

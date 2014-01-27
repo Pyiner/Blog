@@ -1,6 +1,6 @@
 # Django settings for MyBlog project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -9,15 +9,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-from bae.core import const
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME'    : 'GQfmzlewTShPRKWwAwCV',                      # Or path to database file if using sqlite3.
-        'USER'    : const.MYSQL_USER,                      # Not used with sqlite3.
-        'PASSWORD': const.MYSQL_PASS,                  # Not used with sqlite3.
-        'HOST'    : const.MYSQL_HOST,                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT'    : int(const.MYSQL_PORT),                      # Set to empty string for default. Not used with sqlite3.
+        'NAME'    : 'Blog',                      # Or path to database file if using sqlite3.
+        'USER'    : 'root',                      # Not used with sqlite3.
+        'PASSWORD': '123456',                  # Not used with sqlite3.
+        'HOST'    : '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT'    : '',                      # Set to empty string for default. Not used with sqlite3.
 
     }
 }
@@ -32,7 +31,7 @@ CACHES = {
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -131,7 +130,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'django.contrib.markup',
     'Blog',
 )
 
@@ -162,4 +160,4 @@ LOGGING = {
             'propagate': True,
         },
     }
-}
+    }

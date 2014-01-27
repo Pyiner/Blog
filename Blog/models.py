@@ -63,19 +63,3 @@ admin.site.register(Label,LabelAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(OpenProject,OpenProjectAdmin)
 admin.site.register(FriendUrl,FriendUrlAdmin)
-
-
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-@receiver(post_save, sender=Article)#保存文章的时候自动将文章上传到百度云存储
-def article_out(sender,instance,**kwargs):
-    from bae.api import bcs
-    AK = ''           #请改为你的AK
-    SK = ''       #请改为你的SK
-    bname = 'blog-article'
-    bcs2 = bcs.BaeBCS('http://bcs.duapp.com/', AK, SK)
-    ob = str(instance.url+'.md')
-    o = '/'+ob
-    e, d = bcs2.put_object(bname, o,str(instance.content))
-    bcs2.make_public(bname,o) 

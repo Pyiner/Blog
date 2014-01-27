@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% load markup %}
-    {% block title %}
-    <title>{{ p.title }}|Yiner in Python</title>
-    {% endblock %}
+{% block title %}
+<title>{{ p.title }}|Yiner in Python</title>
+{% endblock %}
 {% block content %}
 <section id="content">
 	<article class="post">
@@ -20,7 +19,7 @@
                 {% endfor %}
             </span>
         </p>
-		<section class="article-content">{{ p.content|markdown}}</section>
+		<section class="article-content">{{ p.content|safe}}</section>
 	</article>
     <!-- Duoshuo Comment BEGIN -->
 	<div class="ds-thread" data-title="{{ p.title }}"></div>

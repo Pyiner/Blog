@@ -22,5 +22,4 @@ urlpatterns += patterns('Blog.views',
                         url(r'search','Search'),
                         url(r'^(.*)/$','Page'),
                         url(r'^$','Index'),
-                        url(r'^checkout$','article_out')
                         )

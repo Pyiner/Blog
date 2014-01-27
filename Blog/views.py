@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.http import HttpResponse,HttpResponseRedirect
 import urllib
 from django.core.paginator import Paginator
+import markdown2
 
 def GetCategory():
     category = Category.objects.all()
@@ -39,8 +40,11 @@ def Categorylist(request,category):
         num = int(num)
     else:
         num=1
-    article=Article.objects.filter(category__name=category).order_by('-id')
-    p = Paginator(article, 5)
+    articles = Article.objects.filter(category__name=category).order_by('-id')
+    for article in articles:
+        article.summary = markdown2.markdown(article.summary)
+ 
+    p = Paginator(articles, 5)
     page = p.page(num)
     if num == p.num_pages:
         pnum = None
@@ -60,8 +64,10 @@ def Index(request):
         num = int(num)
     else:
         num=1
-    article=Article.objects.all().order_by("-id")
-    p = Paginator(article, 5)
+    articles =Article.objects.all().order_by("-id")
+    for article in articles:
+        article.summary = markdown2.markdown(article.summary)
+    p = Paginator(articles, 5)
     page = p.page(num)
     if num == p.num_pages:
         pnum = None
@@ -79,6 +85,7 @@ def Page(request,url):
     if url:
         try:
             article = Article.objects.get(url = url)
+            article.content = markdown2.markdown(article.content)
             Article.objects.filter(url=url).update(num=article.num+1)
             c = GetCategory()
             o = GetOpenProject()
@@ -93,9 +100,11 @@ def Page(request,url):
 
 def Search(request):
     key = request.GET.get('keywords')
-    a = Article.objects.all().order_by('-id')
+    articles = Article.objects.all().order_by('-id')
+    for article in articles:
+        article.summary = markdown2.markdown(article.summary)
     page = []
-    for p in a:
+    for p in articles:
         if key in p.content:
             page.append(p)
     c = GetCategory()
@@ -103,17 +112,3 @@ def Search(request):
     f = GetFriendUrl()
     h = HotArticle()
     return render_to_response('index.html',{'P':page,'C':c,'Open':o,'Friend':f,'Hotarticle':h})
-
-def article_out(request):
-    from bae.api import bcs
-    AK = 'ayEMEGaUU4R8KgSGQYFHhGoX'           #请改为你的AK
-    SK = 'la47G8zTiY9STSYpk2Dn2GY0gU7WGfaR'       #请改为你的SK
-    bname = 'blog-article'
-    bcs2 = bcs.BaeBCS('http://bcs.duapp.com/', AK, SK)
-    a = Article.objects.all()
-    for i in a:
-        ob = str(i.url+'.md')
-        o = '/'+ob
-        e, d = bcs2.put_object(bname, o,str(i.content))
-        bcs2.make_public(bname,o)
-    return HttpResponse("Success!")

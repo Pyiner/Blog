@@ -1,7 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 from Blog.models import Article
-import markdown
+import markdown2
 from django.utils import feedgenerator
 
 class LatestEntriesFeed(Feed):

@@ -23,3 +23,10 @@ urlpatterns += patterns('Blog.views',
                         url(r'^(.*)/$','Page'),
                         url(r'^$','Index'),
                         )
+from django.conf import settings
+if settings.DEBUG is False:
+    urlpatterns += patterns('',
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.STATIC_ROOT,
+                                                }),
+                           )

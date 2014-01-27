@@ -15,7 +15,7 @@ class LatestEntriesFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return markdown.markdown(item.content)
+        return markdown2.markdown(item.content)
 
     def item_link(self, item):
          return self.link+item.url+'/'

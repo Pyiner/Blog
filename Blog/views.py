@@ -33,8 +33,7 @@ def GetFriendUrl():
 
 
 def Categorylist(request,category):
-    category = urllib.unquote(str(category))
-    category = urllib.unquote(str(category))
+    category = urllib.unquote(category)
     num = request.GET.get('page')
     if num:
         num = int(num)
@@ -81,7 +80,7 @@ def Index(request):
 
 
 def Page(request,url):
-    url = urllib.unquote(str(url))
+    url = urllib.unquote(url)
     if url:
         try:
             article = Article.objects.get(url = url)

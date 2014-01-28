@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.http import HttpResponse,HttpResponseRedirect
 import urllib
 from django.core.paginator import Paginator
-import markdown2
+import markdown
 
 def GetCategory():
     category = Category.objects.all()
@@ -41,7 +41,7 @@ def Categorylist(request,category):
         num=1
     articles = Article.objects.filter(category__name=category).order_by('-id')
     for article in articles:
-        article.summary = markdown2.markdown(article.summary)
+        article.summary = markdown.markdown(article.summary)
  
     p = Paginator(articles, 5)
     page = p.page(num)
@@ -65,7 +65,7 @@ def Index(request):
         num=1
     articles =Article.objects.all().order_by("-id")
     for article in articles:
-        article.summary = markdown2.markdown(article.summary)
+        article.summary = markdown.markdown(article.summary)
     p = Paginator(articles, 5)
     page = p.page(num)
     if num == p.num_pages:
@@ -84,7 +84,7 @@ def Page(request,url):
     if url:
         try:
             article = Article.objects.get(url = url)
-            article.content = markdown2.markdown(article.content)
+            article.content = markdown.markdown(article.content)
             Article.objects.filter(url=url).update(num=article.num+1)
             c = GetCategory()
             o = GetOpenProject()
@@ -101,7 +101,7 @@ def Search(request):
     key = request.GET.get('keywords')
     articles = Article.objects.all().order_by('-id')
     for article in articles:
-        article.summary = markdown2.markdown(article.summary)
+        article.summary = markdown.markdown(article.summary)
     page = []
     for p in articles:
         if key in p.content:
